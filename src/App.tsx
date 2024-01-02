@@ -1,7 +1,7 @@
 import { Button, Container, Heading } from "@chakra-ui/react";
 import {serialize, useContractWrite, useWalletClient} from "wagmi";
 import { usePermit } from "wagmi-permit";
-import {parseAbi, parseEther, zeroAddress} from "viem";
+import {parseAbi, parseEther, zeroAddress, zeroHash} from "viem";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function App() {
@@ -18,8 +18,7 @@ function App() {
 		address: "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
 		abi:  parseAbi(["function permit(address owner,address spender,uint256 value,uint256 deadline,uint8 v,bytes32 r,bytes32 s)"]),
 		functionName: 'permit',
-		// @ts-ignore
-		args: ["0x5f390415dB0f7d4D336095f3Fd266D6B3B616e7A","0x5f390415dB0f7d4D336095f3Fd266D6B3B616e7A",10000000000000000000n,1704327012n,signature?.v, signature?.r,signature?.s]
+		args: [walletClient?.account.address ?? zeroAddress, "0x5f390415dB0f7d4D336095f3Fd266D6B3B616e7A",10000000000000000000n,1704327012n,signature?.v ?? 0, signature?.r ?? zeroHash,signature?.s ?? zeroHash]
 	});
 
 	return (
